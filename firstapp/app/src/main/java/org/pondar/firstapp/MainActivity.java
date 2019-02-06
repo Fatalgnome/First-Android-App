@@ -10,18 +10,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     /* not used for anything - but just to show some types */
     private String test = "test";
     private int number = 2;
     protected String myName = "martin";
     private float floating = 1.2f;
+    private Toast toast;
 
     //The onCreate method will be called EVERY time
     //our app comes into the foreground view for the user
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         //This line sets the xml file "activity_main" in the layout folder as our main layout
         setContentView(R.layout.activity_main);
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //you can read about what the Snackbar does or
                 //simple try the app on your device or on your emulator.
+                view.setVisibility(View.GONE);
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -54,20 +58,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch(item.getItemId())
+        {
+            case R.id.action_settings:
+                //well, actually we will just display a message to the user here.
+                toast = Toast.makeText(this,"Settings Pressed",Toast.LENGTH_LONG);
+                toast.show();
+                return true;
 
-        //did somebody press the settings?
-        if (id == R.id.action_settings) {
-            //well, actually we will just display a message to the user here.
-            Toast toast = Toast.makeText(this,"Settings Pressed",Toast.LENGTH_LONG);
-            toast.show();
-            return true;
+                case R.id.action_another:
+                toast = Toast.makeText(this, "Something was pressed", Toast.LENGTH_SHORT);
+                toast.show();
+                return true;
+
+                default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
