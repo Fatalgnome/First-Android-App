@@ -1,14 +1,20 @@
 package org.pondar.firstapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -19,12 +25,32 @@ public class MainActivity extends AppCompatActivity
     protected String myName = "martin";
     private float floating = 1.2f;
     private Toast toast;
+    Person p = new Person(60, "Per");
+    ArrayList<Person> people = new ArrayList<>();
+    Random random = new Random();
+    Context context;
+    int duration = toast.LENGTH_LONG;
 
     //The onCreate method will be called EVERY time
     //our app comes into the foreground view for the user
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        context = getApplicationContext();
+
+        for (int i = 0; i < 5; i++)
+        {
+            people.add(new Person(random.nextInt(), "Simon"));
+        }
+
+        for (Person p : people)
+        {
+            toast = Toast.makeText(context, p.toString(p), duration);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
+        }
+
         super.onCreate(savedInstanceState);
         //This line sets the xml file "activity_main" in the layout folder as our main layout
         setContentView(R.layout.activity_main);
